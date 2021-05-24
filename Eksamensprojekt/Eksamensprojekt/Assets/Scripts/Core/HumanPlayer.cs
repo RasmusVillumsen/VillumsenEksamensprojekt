@@ -110,10 +110,10 @@ namespace Chess.Game {
 
 				if (legalMove.StartSquare == startIndex && legalMove.TargetSquare == targetIndex) {
 					if (legalMove.IsPromotion) {
-						if (legalMove.MoveFlag == Move.Flag.ForfremTilDronning && wantsKnightPromotion) {
+						if (legalMove.MoveFlag == Move.Flag.ForfremTilqueen && wantsKnightPromotion) {
 							continue;
 						}
-						if (legalMove.MoveFlag != Move.Flag.ForfremTilDronning && !wantsKnightPromotion) {
+						if (legalMove.MoveFlag != Move.Flag.ForfremTilqueen && !wantsKnightPromotion) {
 							continue;
 						}
 					}

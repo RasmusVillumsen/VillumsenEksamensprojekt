@@ -626,7 +626,7 @@ Kxf6 41. Qb2+ Ke7 42. Ne5 Nd4 43. Rf1 f5 44. Re1 Qd5 45. Qb6 Rd6 46. Qc7+ Kf8
 [WhiteElo "2777"]
 [BlackElo "2737"]
 [ECO "E14"]
-[Opening "Queen's Indian"]
+[Opening "queen's Indian"]
 [Variation "4.e3"]
 [WhiteFideId "4101588"]
 [BlackFideId "703303"]

@@ -5,7 +5,7 @@
 
 	public class MoveGenerator {
 
-		public enum PromotionMode { All, QueenOnly, QueenAndKnight }
+		public enum PromotionMode { All, queenOnly, queenAndKnight }
 
 		public PromotionMode promotionsToGenerate = PromotionMode.All;
 
@@ -110,11 +110,11 @@
 							}
 						}
 						// Castle queenside
-						else if ((targetSquare == d1 || targetSquare == d8) && HasQueensideCastleRight) {
-							int castleQueensideSquare = targetSquare - 1;
-							if (board.Square[castleQueensideSquare] == Piece.Ingen && board.Square[castleQueensideSquare - 1] == Piece.Ingen) {
-								if (!SquareIsAttacked (castleQueensideSquare)) {
-									moves.Add (new Move (friendlyKingSquare, castleQueensideSquare, Move.Flag.Rokade));
+						else if ((targetSquare == d1 || targetSquare == d8) && HasqueensideCastleRight) {
+							int castlequeensideSquare = targetSquare - 1;
+							if (board.Square[castlequeensideSquare] == Piece.Ingen && board.Square[castlequeensideSquare - 1] == Piece.Ingen) {
+								if (!SquareIsAttacked (castlequeensideSquare)) {
+									moves.Add (new Move (friendlyKingSquare, castlequeensideSquare, Move.Flag.Rokade));
 								}
 							}
 						}
@@ -183,10 +183,10 @@
 		}
 
 		void GenerateKnightMoves () {
-			PieceList myKnights = board.knights[friendlyColourIndex];
+			PieceList myknights = board.knights[friendlyColourIndex];
 
-			for (int i = 0; i < myKnights.Count; i++) {
-				int startSquare = myKnights[i];
+			for (int i = 0; i < myknights.Count; i++) {
+				int startSquare = myknights[i];
 
 				// Knight cannot move if it is pinned
 				if (IsPinned (startSquare)) {
@@ -248,7 +248,7 @@
 								if (board.Square[squareTwoForward] == Piece.Ingen) {
 									// Not in check, or pawn is interposing checking piece
 									if (!inCheck || SquareIsInCheckRay (squareTwoForward)) {
-										moves.Add (new Move (startSquare, squareTwoForward, Move.Flag.BondeToFremad));
+										moves.Add (new Move (startSquare, squareTwoForward, Move.Flag.pawnToFremad));
 									}
 								}
 							}
@@ -296,13 +296,13 @@
 		}
 
 		void MakePromotionMoves (int fromSquare, int toSquare) {
-			moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilDronning));
+			moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilqueen));
 			if (promotionsToGenerate == PromotionMode.All) {
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilRytter));
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilTårn));
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilBiskop));
-			} else if (promotionsToGenerate == PromotionMode.QueenAndKnight) {
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilRytter));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilknight));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilrook));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilbishop));
+			} else if (promotionsToGenerate == PromotionMode.queenAndKnight) {
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilknight));
 			}
 
 		}
@@ -331,7 +331,7 @@
 			}
 		}
 
-		bool HasQueensideCastleRight {
+		bool HasqueensideCastleRight {
 			get {
 				int mask = (board.WhiteToMove) ? 2 : 8;
 				return (board.currentGameState & mask) != 0;
@@ -341,19 +341,19 @@
 		void GenSlidingAttackMap () {
 			opponentSlidingAttackMap = 0;
 
-			PieceList enemyRooks = board.rooks[opponentColourIndex];
-			for (int i = 0; i < enemyRooks.Count; i++) {
-				UpdateSlidingAttackPiece (enemyRooks[i], 0, 4);
+			PieceList enemyrooks = board.rooks[opponentColourIndex];
+			for (int i = 0; i < enemyrooks.Count; i++) {
+				UpdateSlidingAttackPiece (enemyrooks[i], 0, 4);
 			}
 
-			PieceList enemyQueens = board.queens[opponentColourIndex];
-			for (int i = 0; i < enemyQueens.Count; i++) {
-				UpdateSlidingAttackPiece (enemyQueens[i], 0, 8);
+			PieceList enemyqueens = board.queens[opponentColourIndex];
+			for (int i = 0; i < enemyqueens.Count; i++) {
+				UpdateSlidingAttackPiece (enemyqueens[i], 0, 8);
 			}
 
-			PieceList enemyBishops = board.bishops[opponentColourIndex];
-			for (int i = 0; i < enemyBishops.Count; i++) {
-				UpdateSlidingAttackPiece (enemyBishops[i], 4, 8);
+			PieceList enemybishops = board.bishops[opponentColourIndex];
+			for (int i = 0; i < enemybishops.Count; i++) {
+				UpdateSlidingAttackPiece (enemybishops[i], 4, 8);
 			}
 		}
 
@@ -415,7 +415,7 @@
 							int pieceType = Piece.BrikType (piece);
 
 							// Check if piece is in bitmask of pieces able to move in current direction
-							if (isDiagonal && Piece.ErBiskopEllerDronning (pieceType) || !isDiagonal && Piece.ErTårnEllerDronning (pieceType)) {
+							if (isDiagonal && Piece.ErbishopEllerqueen (pieceType) || !isDiagonal && Piece.Errooksllerqueen (pieceType)) {
 								// Friendly piece blocks the check, so this is a pin
 								if (isFriendlyPieceAlongRay) {
 									pinsExistInPosition = true;
@@ -443,12 +443,12 @@
 			}
 
 			// Knight attacks
-			PieceList opponentKnights = board.knights[opponentColourIndex];
+			PieceList opponentknights = board.knights[opponentColourIndex];
 			opponentKnightAttacks = 0;
 			bool isKnightCheck = false;
 
-			for (int knightIndex = 0; knightIndex < opponentKnights.Count; knightIndex++) {
-				int startSquare = opponentKnights[knightIndex];
+			for (int knightIndex = 0; knightIndex < opponentknights.Count; knightIndex++) {
+				int startSquare = opponentknights[knightIndex];
 				opponentKnightAttacks |= knightAttackBitboards[startSquare];
 
 				if (!isKnightCheck && BitBoardUtility.ContainsSquare (opponentKnightAttacks, friendlyKingSquare)) {
@@ -500,8 +500,8 @@
 
 			// Undo change to board
 			board.Square[targetSquare] = Piece.Ingen;
-			board.Square[startSquare] = Piece.Bonde | friendlyColour;
-			board.Square[epCapturedPawnSquare] = Piece.Bonde | opponentColour;
+			board.Square[startSquare] = Piece.pawn | friendlyColour;
+			board.Square[epCapturedPawnSquare] = Piece.pawn | opponentColour;
 			return inCheckAfterEpCapture;
 		}
 
@@ -522,7 +522,7 @@
 					}
 					// This square contains an enemy piece
 					else {
-						if (Piece.ErTårnEllerDronning (piece)) {
+						if (Piece.Errooksllerqueen (piece)) {
 							return true;
 						} else {
 							// This piece is not able to move in the current direction, and is therefore blocking any checks along this line
@@ -538,7 +538,7 @@
 				if (numSquaresToEdge[friendlyKingSquare][pawnAttackDirections[friendlyColourIndex][i]] > 0) {
 					// move in direction friendly pawns attack to get square from which enemy pawn would attack
 					int piece = board.Square[friendlyKingSquare + directionOffsets[pawnAttackDirections[friendlyColourIndex][i]]];
-					if (piece == (Piece.Bonde | opponentColour)) // is enemy pawn
+					if (piece == (Piece.pawn | opponentColour)) // is enemy pawn
 					{
 						return true;
 					}

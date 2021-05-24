@@ -64,7 +64,7 @@ namespace Chess {
 			}
 			return 0;
 		}
-
+		
 		int CountMaterial (int colourIndex) {
 			int material = 0;
 			material += board.pawns[colourIndex].Count * pawnValue;

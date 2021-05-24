@@ -11,17 +11,17 @@ namespace Chess.Game {
 			PieceSprites pieceSprites = Piece.ErFarve (piece, Piece.Hvid) ? whitePieces : blackPieces;
 
 			switch (Piece.BrikType (piece)) {
-				case Piece.Bonde:
+				case Piece.pawn:
 					return pieceSprites.pawn;
-				case Piece.Tårn:
+				case Piece.rook:
 					return pieceSprites.rook;
-				case Piece.Rytter:
+				case Piece.knight:
 					return pieceSprites.knight;
-				case Piece.Biskop:
+				case Piece.bishop:
 					return pieceSprites.bishop;
-				case Piece.Dronning:
+				case Piece.queen:
 					return pieceSprites.queen;
-				case Piece.Konge:
+				case Piece.king:
 					return pieceSprites.king;
 				default:
 					if (piece != 0) {

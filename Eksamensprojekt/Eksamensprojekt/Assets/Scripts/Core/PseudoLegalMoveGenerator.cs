@@ -77,7 +77,7 @@
 							int pieceType = Piece.BrikType (piece);
 
 							// Check if piece is in bitmask of pieces able to move in current direction
-							if (isDiagonal && Piece.ErBiskopEllerDronning (pieceType) || !isDiagonal && Piece.ErTårnEllerDronning (pieceType)) {
+							if (isDiagonal && Piece.ErbishopEllerqueen (pieceType) || !isDiagonal && Piece.Errooksllerqueen (pieceType)) {
 								return true;
 							} else {
 								// This enemy piece is not able to move in the current direction, and so is blocking any checks/pins
@@ -91,7 +91,7 @@
 			// Knight attacks
 			var knightAttackSquares = knightMoves[attackSquare];
 			for (int i = 0; i < knightAttackSquares.Length; i++) {
-				if (board.Square[knightAttackSquares[i]] == (Piece.Rytter | attackerColour)) {
+				if (board.Square[knightAttackSquares[i]] == (Piece.knight | attackerColour)) {
 					return true;
 				}
 			}
@@ -104,7 +104,7 @@
 					int s = attackSquare + directionOffsets[pawnAttackDirections[friendlyColourIndex][i]];
 
 					int piece = board.Square[s];
-					if (piece == (Piece.Bonde | attackerColour)) // is enemy pawn
+					if (piece == (Piece.pawn | attackerColour)) // is enemy pawn
 					{
 						return true;
 					}
@@ -167,11 +167,11 @@
 						}
 					}
 					// Castle queenside
-					else if ((targetSquare == d1 || targetSquare == d8) && HasQueensideCastleRight) {
+					else if ((targetSquare == d1 || targetSquare == d8) && HasqueensideCastleRight) {
 						if (!SquareAttacked (targetSquare, opponentColour)) {
-							int castleQueensideSquare = targetSquare - 1;
-							if (board.Square[castleQueensideSquare] == Piece.Ingen && board.Square[castleQueensideSquare - 1] == Piece.Ingen) {
-								moves.Add (new Move (friendlyKingSquare, castleQueensideSquare, Move.Flag.Rokade));
+							int castlequeensideSquare = targetSquare - 1;
+							if (board.Square[castlequeensideSquare] == Piece.Ingen && board.Square[castlequeensideSquare - 1] == Piece.Ingen) {
+								moves.Add (new Move (friendlyKingSquare, castlequeensideSquare, Move.Flag.Rokade));
 							}
 						}
 					}
@@ -227,10 +227,10 @@
 		}
 
 		void GenerateKnightMoves () {
-			PieceList myKnights = board.knights[friendlyColourIndex];
+			PieceList myknights = board.knights[friendlyColourIndex];
 
-			for (int i = 0; i < myKnights.Count; i++) {
-				int startSquare = myKnights[i];
+			for (int i = 0; i < myknights.Count; i++) {
+				int startSquare = myknights[i];
 
 				for (int knightMoveIndex = 0; knightMoveIndex < knightMoves[startSquare].Length; knightMoveIndex++) {
 					int targetSquare = knightMoves[startSquare][knightMoveIndex];
@@ -284,7 +284,7 @@
 							if (board.Square[squareTwoForward] == Piece.Ingen) {
 								// Not in check, or pawn is interposing checking piece
 
-								moves.Add (new Move (startSquare, squareTwoForward, Move.Flag.BondeToFremad));
+								moves.Add (new Move (startSquare, squareTwoForward, Move.Flag.pawnToFremad));
 
 							}
 						}
@@ -324,11 +324,11 @@
 		}
 
 		void MakePromotionMoves (int fromSquare, int toSquare) {
-			moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilDronning));
+			moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilqueen));
 			if (genUnderpromotions) {
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilRytter));
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilTårn));
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilBiskop));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilknight));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilrook));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilbishop));
 			}
 		}
 
@@ -339,7 +339,7 @@
 			}
 		}
 
-		bool HasQueensideCastleRight {
+		bool HasqueensideCastleRight {
 			get {
 				int mask = (board.WhiteToMove) ? 2 : 8;
 				return (board.currentGameState & mask) != 0;

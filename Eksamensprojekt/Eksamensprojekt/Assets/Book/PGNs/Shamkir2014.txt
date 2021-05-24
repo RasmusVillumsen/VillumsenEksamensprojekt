@@ -594,7 +594,7 @@ Qf7 42. Rd8 Kg8 43. Qd5 Kg7 44. Qd4+ Kh6 45. Nc4 Be6 46. Qc5 Rg8 47. c8=Q Bxc8
 [WhiteElo "2881"]
 [BlackElo "2772"]
 [ECO "E15"]
-[Opening "Queen's Indian"]
+[Opening "queen's Indian"]
 [Variation "Nimzovich variation (exaggerated fianchetto)"]
 [WhiteFideId "1503014"]
 [BlackFideId "14109603"]

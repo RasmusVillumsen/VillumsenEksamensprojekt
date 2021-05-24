@@ -3,7 +3,7 @@
 	public static class FenUtility {
 
 		static Dictionary<char, int> pieceTypeFromSymbol = new Dictionary<char, int> () {
-			['k'] = Piece.Konge, ['p'] = Piece.Bonde, ['n'] = Piece.Rytter, ['b'] = Piece.Biskop, ['r'] = Piece.Tårn, ['q'] = Piece.Dronning
+			['k'] = Piece.king, ['p'] = Piece.pawn, ['n'] = Piece.knight, ['b'] = Piece.bishop, ['r'] = Piece.rook, ['q'] = Piece.queen
 		};
 
 		public const string startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -37,9 +37,9 @@
 
 			string castlingRights = (sections.Length > 2) ? sections[2] : "KQkq";
 			loadedPositionInfo.whiteCastleKingside = castlingRights.Contains ("K");
-			loadedPositionInfo.whiteCastleQueenside = castlingRights.Contains ("Q");
+			loadedPositionInfo.whiteCastlequeenside = castlingRights.Contains ("Q");
 			loadedPositionInfo.blackCastleKingside = castlingRights.Contains ("k");
-			loadedPositionInfo.blackCastleQueenside = castlingRights.Contains ("q");
+			loadedPositionInfo.blackCastlequeenside = castlingRights.Contains ("q");
 
 			if (sections.Length > 3) {
 				string enPassantFileName = sections[3][0].ToString ();
@@ -72,22 +72,22 @@
 						int pieceType = Piece.BrikType (piece);
 						char pieceChar = ' ';
 						switch (pieceType) {
-							case Piece.Tårn:
+							case Piece.rook:
 								pieceChar = 'R';
 								break;
-							case Piece.Rytter:
+							case Piece.knight:
 								pieceChar = 'N';
 								break;
-							case Piece.Biskop:
+							case Piece.bishop:
 								pieceChar = 'B';
 								break;
-							case Piece.Dronning:
+							case Piece.queen:
 								pieceChar = 'Q';
 								break;
-							case Piece.Konge:
+							case Piece.king:
 								pieceChar = 'K';
 								break;
-							case Piece.Bonde:
+							case Piece.pawn:
 								pieceChar = 'P';
 								break;
 						}
@@ -111,14 +111,14 @@
 
 			// Castling
 			bool whiteKingside = (board.currentGameState & 1) == 1;
-			bool whiteQueenside = (board.currentGameState >> 1 & 1) == 1;
+			bool whitequeenside = (board.currentGameState >> 1 & 1) == 1;
 			bool blackKingside = (board.currentGameState >> 2 & 1) == 1;
-			bool blackQueenside = (board.currentGameState >> 3 & 1) == 1;
+			bool blackqueenside = (board.currentGameState >> 3 & 1) == 1;
 			fen += ' ';
 			fen += (whiteKingside) ? "K" : "";
-			fen += (whiteQueenside) ? "Q" : "";
+			fen += (whitequeenside) ? "Q" : "";
 			fen += (blackKingside) ? "k" : "";
-			fen += (blackQueenside) ? "q" : "";
+			fen += (blackqueenside) ? "q" : "";
 			fen += ((board.currentGameState & 15) == 0) ? "-" : "";
 
 			// En-passant
@@ -146,9 +146,9 @@
 		public class LoadedPositionInfo {
 			public int[] squares;
 			public bool whiteCastleKingside;
-			public bool whiteCastleQueenside;
+			public bool whiteCastlequeenside;
 			public bool blackCastleKingside;
-			public bool blackCastleQueenside;
+			public bool blackCastlequeenside;
 			public int epFile;
 			public bool whiteToMove;
 			public int plyCount;

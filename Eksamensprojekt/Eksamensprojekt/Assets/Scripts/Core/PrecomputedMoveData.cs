@@ -94,10 +94,10 @@
 				foreach (int knightJumpDelta in allKnightJumps) {
 					int knightJumpSquare = squareIndex + knightJumpDelta;
 					if (knightJumpSquare >= 0 && knightJumpSquare < 64) {
-						int knightSquareY = knightJumpSquare / 8;
-						int knightSquareX = knightJumpSquare - knightSquareY * 8;
+						int knightsquareY = knightJumpSquare / 8;
+						int knightsquareX = knightJumpSquare - knightsquareY * 8;
 						// Ensure knight has moved max of 2 squares on x/y axis (to reject indices that have wrapped around side of board)
-						int maxCoordMoveDst = System.Math.Max (System.Math.Abs (x - knightSquareX), System.Math.Abs (y - knightSquareY));
+						int maxCoordMoveDst = System.Math.Max (System.Math.Abs (x - knightsquareX), System.Math.Abs (y - knightsquareY));
 						if (maxCoordMoveDst == 2) {
 							legalKnightJumps.Add ((byte) knightJumpSquare);
 							knightBitboard |= 1ul << knightJumpSquare;
@@ -151,7 +151,7 @@
 				pawnAttacksWhite[squareIndex] = pawnCapturesWhite.ToArray ();
 				pawnAttacksBlack[squareIndex] = pawnCapturesBlack.ToArray ();
 
-				// Rook moves
+				// rook moves
 				for (int directionIndex = 0; directionIndex < 4; directionIndex++) {
 					int currentDirOffset = directionOffsets[directionIndex];
 					for (int n = 0; n < numSquaresToEdge[squareIndex][directionIndex]; n++) {
@@ -159,7 +159,7 @@
 						rookMoves[squareIndex] |= 1ul << targetSquare;
 					}
 				}
-				// Bishop moves
+				// bishop moves
 				for (int directionIndex = 4; directionIndex < 8; directionIndex++) {
 					int currentDirOffset = directionOffsets[directionIndex];
 					for (int n = 0; n < numSquaresToEdge[squareIndex][directionIndex]; n++) {

@@ -37,7 +37,7 @@ Bxa4 41. Ke4 1/2-1/2
 [WhiteElo "2780"]
 [BlackElo "2826"]
 [ECO "E15"]
-[Opening "Queen's Indian"]
+[Opening "queen's Indian"]
 [Variation "Nimzovich variation (exaggerated fianchetto)"]
 [WhiteFideId "4101588"]
 [BlackFideId "1503014"]

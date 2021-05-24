@@ -242,7 +242,7 @@
 [WhiteElo "2654"]
 [BlackElo "2676"]
 [ECO "E16"]
-[Opening "Queen's Indian"]
+[Opening "queen's Indian"]
 [Variation "Yates variation"]
 [WhiteFideId "1202758"]
 [BlackFideId "8602980"]

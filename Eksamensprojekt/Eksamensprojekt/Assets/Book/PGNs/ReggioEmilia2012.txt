@@ -139,7 +139,7 @@ Nd4 36. Rg1 Rae8 37. Qf1 Qd8 38. Qd1 Qd7 39. Nd5 Bxd5 40. cxd5 Rc8 41. Re1 Ra8
 [WhiteElo "2775"]
 [BlackElo "2729"]
 [ECO "A46"]
-[Opening "Queen's pawn game"]
+[Opening "queen's pawn game"]
 [WhiteFideId "14100010"]
 [BlackFideId "4152956"]
 [EventDate "2011.12.27"]

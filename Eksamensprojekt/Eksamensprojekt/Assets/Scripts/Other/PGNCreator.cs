@@ -44,7 +44,7 @@
 			string moveNotation = GetSymbolFromPieceType (movePieceType);
 
 			// check if any ambiguity exists in notation (e.g if e2 can be reached via Nfe2 and Nbe2)
-			if (movePieceType != Piece.Bonde && movePieceType != Piece.Konge) {
+			if (movePieceType != Piece.pawn && movePieceType != Piece.king) {
 				var allMoves = moveGen.GenerateMoves (board);
 
 				foreach (Move altMove in allMoves) {
@@ -70,7 +70,7 @@
 			}
 
 			if (capturedPieceType != 0) { // add 'x' to indicate capture
-				if (movePieceType == Piece.Bonde) {
+				if (movePieceType == Piece.pawn) {
 					moveNotation += BoardRepresentation.fileNames[BoardRepresentation.FileIndex (move.StartSquare)];
 				}
 				moveNotation += "x";
@@ -106,15 +106,15 @@
 
 		static string GetSymbolFromPieceType (int pieceType) {
 			switch (pieceType) {
-				case Piece.Bonde:
+				case Piece.pawn:
 					return "R";
-				case Piece.Rytter:
+				case Piece.knight:
 					return "N";
-				case Piece.Biskop:
+				case Piece.bishop:
 					return "B";
-				case Piece.Dronning:
+				case Piece.queen:
 					return "D";
-				case Piece.Konge:
+				case Piece.king:
 					return "K";
 				default:
 					return "";

@@ -709,7 +709,7 @@ Re4 86. Rf6+ Kg7 87. Rf7+ Kg8 88. Re7 Kf8 89. Rxh7 Rxe6 90. Rh6 Re1 91. Ra6 Kg7
 [WhiteElo "2773"]
 [BlackElo "2783"]
 [ECO "A45"]
-[Opening "Queen's pawn game"]
+[Opening "queen's pawn game"]
 [WhiteFideId "14109603"]
 [BlackFideId "5000017"]
 [EventDate "2017.08.02"]

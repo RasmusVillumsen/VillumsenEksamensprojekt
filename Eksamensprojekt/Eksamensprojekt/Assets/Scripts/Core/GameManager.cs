@@ -51,7 +51,6 @@ namespace Chess.Game {
 		}
 
 		void Update () {
-			zobristDebug = board.ZobristKey;
 
 			if (gameResult == Result.Playing) {
 				LogAIDiagnostics ();
@@ -133,10 +132,6 @@ namespace Chess.Game {
 		}
 
 
-		public void QuitGame () {
-			Application.Quit ();
-		}
-
 		void NotifyPlayerToMove () {
 			gameResult = GetGameState ();
 			PrintGameResult (gameResult);
@@ -198,13 +193,13 @@ namespace Chess.Game {
 
 			// Look for insufficient material (not all cases implemented yet)
 			int numPawns = board.pawns[Board.WhiteIndex].Count + board.pawns[Board.BlackIndex].Count;
-			int numRooks = board.rooks[Board.WhiteIndex].Count + board.rooks[Board.BlackIndex].Count;
-			int numQueens = board.queens[Board.WhiteIndex].Count + board.queens[Board.BlackIndex].Count;
-			int numKnights = board.knights[Board.WhiteIndex].Count + board.knights[Board.BlackIndex].Count;
-			int numBishops = board.bishops[Board.WhiteIndex].Count + board.bishops[Board.BlackIndex].Count;
+			int numrooks = board.rooks[Board.WhiteIndex].Count + board.rooks[Board.BlackIndex].Count;
+			int numqueens = board.queens[Board.WhiteIndex].Count + board.queens[Board.BlackIndex].Count;
+			int numknights = board.knights[Board.WhiteIndex].Count + board.knights[Board.BlackIndex].Count;
+			int numbishops = board.bishops[Board.WhiteIndex].Count + board.bishops[Board.BlackIndex].Count;
 
-			if (numPawns + numRooks + numQueens == 0) {
-				if (numKnights == 1 || numBishops == 1) {
+			if (numPawns + numrooks + numqueens == 0) {
+				if (numknights == 1 || numbishops == 1) {
 					return Result.InsufficientMaterial;
 				}
 			}

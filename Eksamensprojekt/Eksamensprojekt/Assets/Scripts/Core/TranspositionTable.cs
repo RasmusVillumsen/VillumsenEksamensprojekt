@@ -1,5 +1,4 @@
 ﻿namespace Chess {
-	// Thanks to https://web.archive.org/web/20071031100051/http://www.brucemo.com/compchess/programming/hashing.htm
 	public class TranspositionTable {
 
 		public const int lookupFailed = int.MinValue;

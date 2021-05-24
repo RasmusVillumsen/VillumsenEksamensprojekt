@@ -613,7 +613,7 @@ b6 41. Kc4 Rg4 42. Kd3 Rg3+ 43. Re3 Rg4 44. Rf3 c5 45. dxc5 bxc5 46. Rf8 Kxe5
 [WhiteElo "2728"]
 [BlackElo "2828"]
 [ECO "D04"]
-[Opening "Queen's pawn game"]
+[Opening "queen's pawn game"]
 [WhiteFideId "12573981"]
 [BlackFideId "2020009"]
 [EventDate "2020.10.05"]

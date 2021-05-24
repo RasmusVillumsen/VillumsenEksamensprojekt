@@ -2,12 +2,12 @@
 	public static class Piece {
 
 		public const int Ingen = 0;
-		public const int Konge = 1;
-		public const int Bonde = 2;
-		public const int Rytter = 3;
-		public const int Biskop = 5;
-		public const int Tårn = 6;
-		public const int Dronning = 7;
+		public const int king = 1;
+		public const int pawn = 2;
+		public const int knight = 3;
+		public const int bishop = 5;
+		public const int rook = 6;
+		public const int queen = 7;
 		public const int Hvid = 8;
 		public const int Sort = 16;
 
@@ -28,11 +28,11 @@
 			return piece & typeMask;
 		}
 
-		public static bool ErTårnEllerDronning (int piece) {
+		public static bool Errooksllerqueen (int piece) {
 			return (piece & 0b110) == 0b110;
 		}
 
-		public static bool ErBiskopEllerDronning (int piece) {
+		public static bool ErbishopEllerqueen (int piece) {
 			return (piece & 0b101) == 0b101;
 		}
 

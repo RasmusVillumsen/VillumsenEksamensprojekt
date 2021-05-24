@@ -633,7 +633,7 @@ Rb3+ 67. Kg2 f4 68. g4 Kg5 69. Bf7 Kh4 70. Bxe6 f3+ 71. Kh2 Rb2 72. Ra3 Rxf2+
 [WhiteElo "2802"]
 [BlackElo "2790"]
 [ECO "D02"]
-[Opening "Queen's pawn game"]
+[Opening "queen's pawn game"]
 [WhiteFideId "2020009"]
 [BlackFideId "24116068"]
 [EventDate "2015.04.17"]

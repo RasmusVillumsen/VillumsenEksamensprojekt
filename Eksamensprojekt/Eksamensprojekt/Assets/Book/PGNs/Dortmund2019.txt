@@ -293,7 +293,7 @@ Rc1 g5 16. h3 Rc8 17. Rxc8 Qxc8 18. Ke2 Qb8 19. Nb3 Qa7 20. Rc1 g4 21. hxg4 hxg4
 [WhiteElo "2759"]
 [BlackElo "2735"]
 [ECO "E19"]
-[Opening "Queen's Indian"]
+[Opening "queen's Indian"]
 [Variation "old main line, 9.Qxc3"]
 [WhiteFideId "13400924"]
 [BlackFideId "738590"]

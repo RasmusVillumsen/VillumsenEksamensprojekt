@@ -135,7 +135,7 @@ Qe6 35. Kf2 Qh3 36. Kg1 Qe6 37. Kf2 Qh3 1/2-1/2
 [WhiteElo "2790"]
 [BlackElo "2756"]
 [ECO "D02"]
-[Opening "Queen's pawn game"]
+[Opening "queen's pawn game"]
 [WhiteFideId "13401319"]
 [BlackFideId "13400924"]
 [EventDate "2019.03.31"]

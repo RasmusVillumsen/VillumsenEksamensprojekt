@@ -14,11 +14,11 @@ namespace Chess {
 			public const int Ingen = 0;
 			public const int EnPassantErobring = 1;
 			public const int Rokade = 2;
-			public const int ForfremTilDronning = 3;
-			public const int ForfremTilRytter = 4;
-			public const int ForfremTilTårn = 5;
-			public const int ForfremTilBiskop = 6;
-			public const int BondeToFremad = 7;
+			public const int ForfremTilqueen = 3;
+			public const int ForfremTilknight = 4;
+			public const int ForfremTilrook = 5;
+			public const int ForfremTilbishop = 6;
+			public const int pawnToFremad = 7;
 		}
 
 		readonly ushort moveValue;
@@ -54,7 +54,7 @@ namespace Chess {
 		public bool IsPromotion {
 			get {
 				int flag = MoveFlag;
-				return flag == Flag.ForfremTilDronning || flag == Flag.ForfremTilTårn || flag == Flag.ForfremTilRytter || flag == Flag.ForfremTilBiskop;
+				return flag == Flag.ForfremTilqueen || flag == Flag.ForfremTilrook || flag == Flag.ForfremTilknight || flag == Flag.ForfremTilbishop;
 			}
 		}
 
@@ -67,14 +67,14 @@ namespace Chess {
 		public int PromotionPieceType {
 			get {
 				switch (MoveFlag) {
-					case Flag.ForfremTilTårn:
-						return Piece.Tårn;
-					case Flag.ForfremTilRytter:
-						return Piece.Rytter;
-					case Flag.ForfremTilBiskop:
-						return Piece.Biskop;
-					case Flag.ForfremTilDronning:
-						return Piece.Dronning;
+					case Flag.ForfremTilrook:
+						return Piece.rook;
+					case Flag.ForfremTilknight:
+						return Piece.knight;
+					case Flag.ForfremTilbishop:
+						return Piece.bishop;
+					case Flag.ForfremTilqueen:
+						return Piece.queen;
 					default:
 						return Piece.Ingen;
 				}

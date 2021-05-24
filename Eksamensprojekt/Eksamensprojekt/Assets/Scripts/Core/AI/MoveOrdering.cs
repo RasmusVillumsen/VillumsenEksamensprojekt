@@ -39,15 +39,15 @@ namespace Chess {
 					score = capturedPieceValueMultiplier * GetPieceValue (capturePieceType) - GetPieceValue (movePieceType);
 				}
 
-				if (movePieceType == Piece.Bonde) {
+				if (movePieceType == Piece.pawn) {
 
-					if (flag == Move.Flag.ForfremTilDronning) {
+					if (flag == Move.Flag.ForfremTilqueen) {
 						score += Evaluation.queenValue;
-					} else if (flag == Move.Flag.ForfremTilRytter) {
+					} else if (flag == Move.Flag.ForfremTilknight) {
 						score += Evaluation.knightValue;
-					} else if (flag == Move.Flag.ForfremTilTårn) {
+					} else if (flag == Move.Flag.ForfremTilrook) {
 						score += Evaluation.rookValue;
-					} else if (flag == Move.Flag.ForfremTilBiskop) {
+					} else if (flag == Move.Flag.ForfremTilbishop) {
 						score += Evaluation.bishopValue;
 					}
 				} else {
@@ -68,15 +68,15 @@ namespace Chess {
 
 		static int GetPieceValue (int pieceType) {
 			switch (pieceType) {
-				case Piece.Dronning:
+				case Piece.queen:
 					return Evaluation.queenValue;
-				case Piece.Tårn:
+				case Piece.rook:
 					return Evaluation.rookValue;
-				case Piece.Rytter:
+				case Piece.knight:
 					return Evaluation.knightValue;
-				case Piece.Biskop:
+				case Piece.bishop:
 					return Evaluation.bishopValue;
-				case Piece.Bonde:
+				case Piece.pawn:
 					return Evaluation.pawnValue;
 				default:
 					return 0;
