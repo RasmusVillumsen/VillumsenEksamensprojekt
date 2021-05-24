@@ -22,8 +22,6 @@ namespace Chess.Game {
 		public Color[] colors;
 
 		public bool useClocks;
-		public Clock whiteClock;
-		public Clock blackClock;
 		public TMPro.TMP_Text aiDiagnosticsUI;
 		public TMPro.TMP_Text resultUI;
 
@@ -41,11 +39,6 @@ namespace Chess.Game {
 
 		void Start () {
 			//Application.targetFrameRate = 60;
-
-			if (useClocks) {
-				whiteClock.isTurnToMove = false;
-				blackClock.isTurnToMove = false;
-			}
 
 			boardUI = FindObjectOfType<BoardUI> ();
 			gameMoves = new List<Move> ();
@@ -65,16 +58,7 @@ namespace Chess.Game {
 
 				playerToMove.Update ();
 
-				if (useClocks) {
-					whiteClock.isTurnToMove = board.WhiteToMove;
-					blackClock.isTurnToMove = !board.WhiteToMove;
-				}
 			}
-
-			if (Input.GetKeyDown (KeyCode.E)) {
-				ExportGame ();
-			}
-
 		}
 
 		void OnMoveChosen (Move move) {
@@ -126,7 +110,6 @@ namespace Chess.Game {
 			string text = "";
 			var d = aiSettings.diagnostics;
 			//text += "AI Diagnostics";
-			text += $"<color=#{ColorUtility.ToHtmlStringRGB(colors[3])}>Version 1.0\n";
 			text += $"<color=#{ColorUtility.ToHtmlStringRGB(colors[0])}>Depth Searched: {d.lastCompletedDepth}";
 			//text += $"\nPositions evaluated: {d.numPositionsEvaluated}";
 
@@ -149,18 +132,6 @@ namespace Chess.Game {
 			aiDiagnosticsUI.text = text;
 		}
 
-		public void ExportGame () {
-			string pgn = PGNCreator.CreatePGN (gameMoves.ToArray ());
-			string baseUrl = "https://www.lichess.org/paste?pgn=";
-			string escapedPGN = UnityEngine.Networking.UnityWebRequest.EscapeURL (pgn);
-			string url = baseUrl + escapedPGN;
-
-			Application.OpenURL (url);
-			TextEditor t = new TextEditor ();
-			t.text = pgn;
-			t.SelectAll ();
-			t.Copy ();
-		}
 
 		public void QuitGame () {
 			Application.Quit ();

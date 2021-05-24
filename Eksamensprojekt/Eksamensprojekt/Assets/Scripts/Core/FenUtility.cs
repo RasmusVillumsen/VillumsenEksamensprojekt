@@ -3,7 +3,7 @@
 	public static class FenUtility {
 
 		static Dictionary<char, int> pieceTypeFromSymbol = new Dictionary<char, int> () {
-			['k'] = Piece.King, ['p'] = Piece.Pawn, ['n'] = Piece.Knight, ['b'] = Piece.Bishop, ['r'] = Piece.Rook, ['q'] = Piece.Queen
+			['k'] = Piece.Konge, ['p'] = Piece.Bonde, ['n'] = Piece.Rytter, ['b'] = Piece.Biskop, ['r'] = Piece.Tårn, ['q'] = Piece.Dronning
 		};
 
 		public const string startFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -25,7 +25,7 @@
 					if (char.IsDigit (symbol)) {
 						file += (int) char.GetNumericValue (symbol);
 					} else {
-						int pieceColour = (char.IsUpper (symbol)) ? Piece.White : Piece.Black;
+						int pieceColour = (char.IsUpper (symbol)) ? Piece.Hvid : Piece.Sort;
 						int pieceType = pieceTypeFromSymbol[char.ToLower (symbol)];
 						loadedPositionInfo.squares[rank * 8 + file] = pieceType | pieceColour;
 						file++;
@@ -68,26 +68,26 @@
 							fen += numEmptyFiles;
 							numEmptyFiles = 0;
 						}
-						bool isBlack = Piece.IsColour (piece, Piece.Black);
-						int pieceType = Piece.PieceType (piece);
+						bool isBlack = Piece.ErFarve (piece, Piece.Sort);
+						int pieceType = Piece.BrikType (piece);
 						char pieceChar = ' ';
 						switch (pieceType) {
-							case Piece.Rook:
+							case Piece.Tårn:
 								pieceChar = 'R';
 								break;
-							case Piece.Knight:
+							case Piece.Rytter:
 								pieceChar = 'N';
 								break;
-							case Piece.Bishop:
+							case Piece.Biskop:
 								pieceChar = 'B';
 								break;
-							case Piece.Queen:
+							case Piece.Dronning:
 								pieceChar = 'Q';
 								break;
-							case Piece.King:
+							case Piece.Konge:
 								pieceChar = 'K';
 								break;
-							case Piece.Pawn:
+							case Piece.Bonde:
 								pieceChar = 'P';
 								break;
 						}

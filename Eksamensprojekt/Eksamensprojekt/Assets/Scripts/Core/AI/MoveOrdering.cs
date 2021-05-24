@@ -29,25 +29,25 @@ namespace Chess {
 
 			for (int i = 0; i < moves.Count; i++) {
 				int score = 0;
-				int movePieceType = Piece.PieceType (board.Square[moves[i].StartSquare]);
-				int capturePieceType = Piece.PieceType (board.Square[moves[i].TargetSquare]);
+				int movePieceType = Piece.BrikType (board.Square[moves[i].StartSquare]);
+				int capturePieceType = Piece.BrikType (board.Square[moves[i].TargetSquare]);
 				int flag = moves[i].MoveFlag;
 
-				if (capturePieceType != Piece.None) {
+				if (capturePieceType != Piece.Ingen) {
 					// Order moves to try capturing the most valuable opponent piece with least valuable of own pieces first
 					// The capturedPieceValueMultiplier is used to make even 'bad' captures like QxP rank above non-captures
 					score = capturedPieceValueMultiplier * GetPieceValue (capturePieceType) - GetPieceValue (movePieceType);
 				}
 
-				if (movePieceType == Piece.Pawn) {
+				if (movePieceType == Piece.Bonde) {
 
-					if (flag == Move.Flag.PromoteToQueen) {
+					if (flag == Move.Flag.ForfremTilDronning) {
 						score += Evaluation.queenValue;
-					} else if (flag == Move.Flag.PromoteToKnight) {
+					} else if (flag == Move.Flag.ForfremTilRytter) {
 						score += Evaluation.knightValue;
-					} else if (flag == Move.Flag.PromoteToRook) {
+					} else if (flag == Move.Flag.ForfremTilTårn) {
 						score += Evaluation.rookValue;
-					} else if (flag == Move.Flag.PromoteToBishop) {
+					} else if (flag == Move.Flag.ForfremTilBiskop) {
 						score += Evaluation.bishopValue;
 					}
 				} else {
@@ -68,15 +68,15 @@ namespace Chess {
 
 		static int GetPieceValue (int pieceType) {
 			switch (pieceType) {
-				case Piece.Queen:
+				case Piece.Dronning:
 					return Evaluation.queenValue;
-				case Piece.Rook:
+				case Piece.Tårn:
 					return Evaluation.rookValue;
-				case Piece.Knight:
+				case Piece.Rytter:
 					return Evaluation.knightValue;
-				case Piece.Bishop:
+				case Piece.Biskop:
 					return Evaluation.bishopValue;
-				case Piece.Pawn:
+				case Piece.Bonde:
 					return Evaluation.pawnValue;
 				default:
 					return 0;

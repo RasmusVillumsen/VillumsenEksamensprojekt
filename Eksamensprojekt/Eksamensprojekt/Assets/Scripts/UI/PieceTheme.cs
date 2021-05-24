@@ -8,20 +8,20 @@ namespace Chess.Game {
 		public PieceSprites blackPieces;
 
 		public Sprite GetPieceSprite (int piece) {
-			PieceSprites pieceSprites = Piece.IsColour (piece, Piece.White) ? whitePieces : blackPieces;
+			PieceSprites pieceSprites = Piece.ErFarve (piece, Piece.Hvid) ? whitePieces : blackPieces;
 
-			switch (Piece.PieceType (piece)) {
-				case Piece.Pawn:
+			switch (Piece.BrikType (piece)) {
+				case Piece.Bonde:
 					return pieceSprites.pawn;
-				case Piece.Rook:
+				case Piece.Tårn:
 					return pieceSprites.rook;
-				case Piece.Knight:
+				case Piece.Rytter:
 					return pieceSprites.knight;
-				case Piece.Bishop:
+				case Piece.Biskop:
 					return pieceSprites.bishop;
-				case Piece.Queen:
+				case Piece.Dronning:
 					return pieceSprites.queen;
-				case Piece.King:
+				case Piece.Konge:
 					return pieceSprites.king;
 				default:
 					if (piece != 0) {

@@ -69,21 +69,21 @@ namespace Chess {
 
 				int moveFromIndex = move.StartSquare;
 				int moveToIndex = move.TargetSquare;
-				int movePieceType = Piece.PieceType (board.Square[moveFromIndex]);
+				int movePieceType = Piece.BrikType (board.Square[moveFromIndex]);
 				Coord fromCoord = BoardRepresentation.CoordFromIndex (moveFromIndex);
 				Coord toCoord = BoardRepresentation.CoordFromIndex (moveToIndex);
 				if (algebraicMove == "OO") { // castle kingside
-					if (movePieceType == Piece.King && moveToIndex - moveFromIndex == 2) {
+					if (movePieceType == Piece.Konge && moveToIndex - moveFromIndex == 2) {
 						return move;
 					}
 				} else if (algebraicMove == "OOO") { // castle queenside
-					if (movePieceType == Piece.King && moveToIndex - moveFromIndex == -2) {
+					if (movePieceType == Piece.Konge && moveToIndex - moveFromIndex == -2) {
 						return move;
 					}
 				}
 				// Is pawn move if starts with any file indicator (e.g. 'e'4. Note that uppercase B is used for bishops) 
 				else if (fileNames.Contains (algebraicMove[0].ToString ())) {
-					if (movePieceType != Piece.Pawn) {
+					if (movePieceType != Piece.Bonde) {
 						continue;
 					}
 					if (fileNames.IndexOf (algebraicMove[0]) == fromCoord.fileIndex) { // correct starting file
@@ -155,17 +155,17 @@ namespace Chess {
 		static int GetPieceTypeFromSymbol (char symbol) {
 			switch (symbol) {
 				case 'R':
-					return Piece.Rook;
+					return Piece.Bonde;
 				case 'N':
-					return Piece.Knight;
+					return Piece.Rytter;
 				case 'B':
-					return Piece.Bishop;
+					return Piece.Biskop;
 				case 'Q':
-					return Piece.Queen;
+					return Piece.Dronning;
 				case 'K':
-					return Piece.King;
+					return Piece.Konge;
 				default:
-					return Piece.None;
+					return Piece.Ingen;
 			}
 		}
 	}

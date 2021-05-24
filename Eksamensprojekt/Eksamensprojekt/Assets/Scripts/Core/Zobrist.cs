@@ -80,10 +80,10 @@ namespace Chess {
 
 			for (int squareIndex = 0; squareIndex < 64; squareIndex++) {
 				if (board.Square[squareIndex] != 0) {
-					int pieceType = Piece.PieceType (board.Square[squareIndex]);
-					int pieceColour = Piece.Colour (board.Square[squareIndex]);
+					int pieceType = Piece.BrikType (board.Square[squareIndex]);
+					int pieceColour = Piece.Farve (board.Square[squareIndex]);
 
-					zobristKey ^= piecesArray[pieceType, (pieceColour == Piece.White) ? Board.WhiteIndex : Board.BlackIndex, squareIndex];
+					zobristKey ^= piecesArray[pieceType, (pieceColour == Piece.Hvid) ? Board.WhiteIndex : Board.BlackIndex, squareIndex];
 				}
 			}
 
@@ -92,7 +92,7 @@ namespace Chess {
 				zobristKey ^= enPassantFile[epIndex];
 			}
 
-			if (board.ColourToMove == Piece.Black) {
+			if (board.ColourToMove == Piece.Sort) {
 				zobristKey ^= sideToMove;
 			}
 

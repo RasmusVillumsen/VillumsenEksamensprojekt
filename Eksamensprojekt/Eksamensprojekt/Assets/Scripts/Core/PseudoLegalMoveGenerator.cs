@@ -40,9 +40,9 @@
 
 		public bool SquareAttacked (int attackSquare, int attackerColour) {
 
-			int attackerColourIndex = (attackerColour == Piece.White) ? Board.WhiteIndex : Board.BlackIndex;
+			int attackerColourIndex = (attackerColour == Piece.Hvid) ? Board.WhiteIndex : Board.BlackIndex;
 			int friendlyColourIndex = 1 - attackerColourIndex;
-			int friendlyColour = (attackerColour == Piece.White) ? Piece.Black : Piece.White;
+			int friendlyColour = (attackerColour == Piece.Hvid) ? Piece.Sort : Piece.Hvid;
 
 			int startDirIndex = 0;
 			int endDirIndex = 8;
@@ -68,16 +68,16 @@
 					int piece = board.Square[squareIndex];
 
 					// This square contains a piece
-					if (piece != Piece.None) {
-						if (Piece.IsColour (piece, friendlyColour)) {
+					if (piece != Piece.Ingen) {
+						if (Piece.ErFarve (piece, friendlyColour)) {
 							break;
 						}
 						// This square contains an enemy piece
 						else {
-							int pieceType = Piece.PieceType (piece);
+							int pieceType = Piece.BrikType (piece);
 
 							// Check if piece is in bitmask of pieces able to move in current direction
-							if (isDiagonal && Piece.IsBishopOrQueen (pieceType) || !isDiagonal && Piece.IsRookOrQueen (pieceType)) {
+							if (isDiagonal && Piece.ErBiskopEllerDronning (pieceType) || !isDiagonal && Piece.ErTårnEllerDronning (pieceType)) {
 								return true;
 							} else {
 								// This enemy piece is not able to move in the current direction, and so is blocking any checks/pins
@@ -91,7 +91,7 @@
 			// Knight attacks
 			var knightAttackSquares = knightMoves[attackSquare];
 			for (int i = 0; i < knightAttackSquares.Length; i++) {
-				if (board.Square[knightAttackSquares[i]] == (Piece.Knight | attackerColour)) {
+				if (board.Square[knightAttackSquares[i]] == (Piece.Rytter | attackerColour)) {
 					return true;
 				}
 			}
@@ -104,7 +104,7 @@
 					int s = attackSquare + directionOffsets[pawnAttackDirections[friendlyColourIndex][i]];
 
 					int piece = board.Square[s];
-					if (piece == (Piece.Pawn | attackerColour)) // is enemy pawn
+					if (piece == (Piece.Bonde | attackerColour)) // is enemy pawn
 					{
 						return true;
 					}
@@ -123,7 +123,7 @@
 		void Init () {
 			moves = new List<Move> (64);
 
-			isWhiteToMove = board.ColourToMove == Piece.White;
+			isWhiteToMove = board.ColourToMove == Piece.Hvid;
 			friendlyColour = board.ColourToMove;
 			opponentColour = board.OpponentColour;
 			friendlyKingSquare = board.KingSquare[board.ColourToMoveIndex];
@@ -137,11 +137,11 @@
 				int pieceOnTargetSquare = board.Square[targetSquare];
 
 				// Skip squares occupied by friendly pieces
-				if (Piece.IsColour (pieceOnTargetSquare, friendlyColour)) {
+				if (Piece.ErFarve (pieceOnTargetSquare, friendlyColour)) {
 					continue;
 				}
 
-				bool isCapture = Piece.IsColour (pieceOnTargetSquare, opponentColour);
+				bool isCapture = Piece.ErFarve (pieceOnTargetSquare, opponentColour);
 				if (!isCapture) {
 					// King can't move to square marked as under enemy control, unless he is capturing that piece
 					// Also skip if not generating quiet moves
@@ -160,8 +160,8 @@
 					if ((targetSquare == f1 || targetSquare == f8) && HasKingsideCastleRight) {
 						if (!SquareAttacked (targetSquare, opponentColour)) {
 							int castleKingsideSquare = targetSquare + 1;
-							if (board.Square[castleKingsideSquare] == Piece.None) {
-								moves.Add (new Move (friendlyKingSquare, castleKingsideSquare, Move.Flag.Castling));
+							if (board.Square[castleKingsideSquare] == Piece.Ingen) {
+								moves.Add (new Move (friendlyKingSquare, castleKingsideSquare, Move.Flag.Rokade));
 
 							}
 						}
@@ -170,8 +170,8 @@
 					else if ((targetSquare == d1 || targetSquare == d8) && HasQueensideCastleRight) {
 						if (!SquareAttacked (targetSquare, opponentColour)) {
 							int castleQueensideSquare = targetSquare - 1;
-							if (board.Square[castleQueensideSquare] == Piece.None && board.Square[castleQueensideSquare - 1] == Piece.None) {
-								moves.Add (new Move (friendlyKingSquare, castleQueensideSquare, Move.Flag.Castling));
+							if (board.Square[castleQueensideSquare] == Piece.Ingen && board.Square[castleQueensideSquare - 1] == Piece.Ingen) {
+								moves.Add (new Move (friendlyKingSquare, castleQueensideSquare, Move.Flag.Rokade));
 							}
 						}
 					}
@@ -208,10 +208,10 @@
 					int targetSquarePiece = board.Square[targetSquare];
 
 					// Blocked by friendly piece, so stop looking in this direction
-					if (Piece.IsColour (targetSquarePiece, friendlyColour)) {
+					if (Piece.ErFarve (targetSquarePiece, friendlyColour)) {
 						break;
 					}
-					bool isCapture = targetSquarePiece != Piece.None;
+					bool isCapture = targetSquarePiece != Piece.Ingen;
 
 				if (genQuiets || isCapture) {
 						moves.Add (new Move (startSquare, targetSquare));
@@ -235,10 +235,10 @@
 				for (int knightMoveIndex = 0; knightMoveIndex < knightMoves[startSquare].Length; knightMoveIndex++) {
 					int targetSquare = knightMoves[startSquare][knightMoveIndex];
 					int targetSquarePiece = board.Square[targetSquare];
-					bool isCapture = Piece.IsColour (targetSquarePiece, opponentColour);
+					bool isCapture = Piece.ErFarve (targetSquarePiece, opponentColour);
 					if (genQuiets || isCapture) {
 						// Skip if square contains friendly piece, or if in check and knight is not interposing/capturing checking piece
-						if (Piece.IsColour (targetSquarePiece, friendlyColour)) {
+						if (Piece.ErFarve (targetSquarePiece, friendlyColour)) {
 							continue;
 						}
 						moves.Add (new Move (startSquare, targetSquare));
@@ -249,7 +249,7 @@
 
 		void GeneratePawnMoves () {
 			PieceList myPawns = board.pawns[friendlyColourIndex];
-			int pawnOffset = (friendlyColour == Piece.White) ? 8 : -8;
+			int pawnOffset = (friendlyColour == Piece.Hvid) ? 8 : -8;
 			int startRank = (board.WhiteToMove) ? 1 : 6;
 			int finalRankBeforePromotion = (board.WhiteToMove) ? 6 : 1;
 
@@ -269,7 +269,7 @@
 					int squareOneForward = startSquare + pawnOffset;
 
 					// Square ahead of pawn is empty: forward moves
-					if (board.Square[squareOneForward] == Piece.None) {
+					if (board.Square[squareOneForward] == Piece.Ingen) {
 						// Pawn not pinned, or is moving along line of pin
 
 						if (oneStepFromPromotion) {
@@ -281,10 +281,10 @@
 						// Is on starting square (so can move two forward if not blocked)
 						if (rank == startRank) {
 							int squareTwoForward = squareOneForward + pawnOffset;
-							if (board.Square[squareTwoForward] == Piece.None) {
+							if (board.Square[squareTwoForward] == Piece.Ingen) {
 								// Not in check, or pawn is interposing checking piece
 
-								moves.Add (new Move (startSquare, squareTwoForward, Move.Flag.PawnTwoForward));
+								moves.Add (new Move (startSquare, squareTwoForward, Move.Flag.BondeToFremad));
 
 							}
 						}
@@ -302,7 +302,7 @@
 						int targetPiece = board.Square[targetSquare];
 
 						// Regular capture
-						if (Piece.IsColour (targetPiece, opponentColour)) {
+						if (Piece.ErFarve (targetPiece, opponentColour)) {
 
 							if (oneStepFromPromotion) {
 								MakePromotionMoves (startSquare, targetSquare);
@@ -315,7 +315,7 @@
 						if (targetSquare == enPassantSquare) {
 							int epCapturedPawnSquare = targetSquare + ((board.WhiteToMove) ? -8 : 8);
 
-							moves.Add (new Move (startSquare, targetSquare, Move.Flag.EnPassantCapture));
+							moves.Add (new Move (startSquare, targetSquare, Move.Flag.EnPassantErobring));
 
 						}
 					}
@@ -324,11 +324,11 @@
 		}
 
 		void MakePromotionMoves (int fromSquare, int toSquare) {
-			moves.Add (new Move (fromSquare, toSquare, Move.Flag.PromoteToQueen));
+			moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilDronning));
 			if (genUnderpromotions) {
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.PromoteToKnight));
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.PromoteToRook));
-				moves.Add (new Move (fromSquare, toSquare, Move.Flag.PromoteToBishop));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilRytter));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilTårn));
+				moves.Add (new Move (fromSquare, toSquare, Move.Flag.ForfremTilBiskop));
 			}
 		}
 

@@ -29,10 +29,10 @@
 
 			MoveGenerator moveGen = new MoveGenerator ();
 
-			int movePieceType = Piece.PieceType (board.Square[move.StartSquare]);
-			int capturedPieceType = Piece.PieceType (board.Square[move.TargetSquare]);
+			int movePieceType = Piece.BrikType (board.Square[move.StartSquare]);
+			int capturedPieceType = Piece.BrikType (board.Square[move.TargetSquare]);
 
-			if (move.MoveFlag == Move.Flag.Castling) {
+			if (move.MoveFlag == Move.Flag.Rokade) {
 				int delta = move.TargetSquare - move.StartSquare;
 				if (delta == 2) {
 					return "O-O";
@@ -44,13 +44,13 @@
 			string moveNotation = GetSymbolFromPieceType (movePieceType);
 
 			// check if any ambiguity exists in notation (e.g if e2 can be reached via Nfe2 and Nbe2)
-			if (movePieceType != Piece.Pawn && movePieceType != Piece.King) {
+			if (movePieceType != Piece.Bonde && movePieceType != Piece.Konge) {
 				var allMoves = moveGen.GenerateMoves (board);
 
 				foreach (Move altMove in allMoves) {
 
 					if (altMove.StartSquare != move.StartSquare && altMove.TargetSquare == move.TargetSquare) { // if moving to same square from different square
-						if (Piece.PieceType (board.Square[altMove.StartSquare]) == movePieceType) { // same piece type
+						if (Piece.BrikType (board.Square[altMove.StartSquare]) == movePieceType) { // same piece type
 							int fromFileIndex = BoardRepresentation.FileIndex (move.StartSquare);
 							int alternateFromFileIndex = BoardRepresentation.FileIndex (altMove.StartSquare);
 							int fromRankIndex = BoardRepresentation.RankIndex (move.StartSquare);
@@ -70,12 +70,12 @@
 			}
 
 			if (capturedPieceType != 0) { // add 'x' to indicate capture
-				if (movePieceType == Piece.Pawn) {
+				if (movePieceType == Piece.Bonde) {
 					moveNotation += BoardRepresentation.fileNames[BoardRepresentation.FileIndex (move.StartSquare)];
 				}
 				moveNotation += "x";
 			} else { // check if capturing ep
-				if (move.MoveFlag == Move.Flag.EnPassantCapture) {
+				if (move.MoveFlag == Move.Flag.EnPassantErobring) {
 					moveNotation += BoardRepresentation.fileNames[BoardRepresentation.FileIndex (move.StartSquare)] + "x";
 				}
 			}
@@ -106,15 +106,15 @@
 
 		static string GetSymbolFromPieceType (int pieceType) {
 			switch (pieceType) {
-				case Piece.Rook:
+				case Piece.Bonde:
 					return "R";
-				case Piece.Knight:
+				case Piece.Rytter:
 					return "N";
-				case Piece.Bishop:
+				case Piece.Biskop:
 					return "B";
-				case Piece.Queen:
-					return "Q";
-				case Piece.King:
+				case Piece.Dronning:
+					return "D";
+				case Piece.Konge:
 					return "K";
 				default:
 					return "";
